@@ -1,0 +1,68 @@
+10-7-19:
+
+~/dev/playing/roadrunner$ clang -Xpreprocessor -fopenmp -m64  -I/Users/heiland/dev/roadrunner-osx-10.9-cp36m/include/rr/C -L/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib -lroadrunner_c_api  -L/usr/local/opt/libomp/lib -lomp  omp_rr.c -o omp_rr
+
+~/dev/playing/roadrunner$ export DYLD_LIBRARY_PATH=/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib
+
+~/dev/playing/roadrunner$ ./omp_rr toy.xml 5
+------  # of threads = 5
+
+------------  thread 4  ---------------
+------------  thread 5  ---------------
+------------  thread 1  ---------------
+Starting Test Program ./omp_rr
+------------  thread 2  ---------------
+Starting Test Program ./omp_rr
+Starting Test Program ./omp_rr
+------------  thread 3  ---------------
+Starting Test Program ./omp_rr
+Starting Test Program ./omp_rr
+omp_rr(1332,0x70000a2b4000) malloc: *** error for object 0x7f8ceaa00278: pointer being freed was not allocated
+omp_rr(1332,0x70000a2b4000) malloc: *** set a breakpoint in malloc_error_break to debug
+Abort trap: 6
+
+
+
+----------------------
+clang -I/Users/heiland/dev/roadrunner-osx-10.9-cp36m/include/rr/C -L/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib -lroadrunner_c_api test0.c -o test0
+
+~/dev/playing/roadrunner$ clang -I/Users/heiland/dev/roadrunner-osx-10.9-cp36m/include/rr/C -L/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib -lroadrunner_c_api test0.c -o test0
+
+~/dev/playing/roadrunner$ cp toy.xml feedback.xml
+~/dev/playing/roadrunner$ test0 
+Starting Test Program test0
+      time	  [Energy]	 [Glucose]	[Hydrogen]	  [Oxygen]
+  0.000000	  0.000000	 32.000000	  0.000000	 38.000000
+  1.111111	 23.115592	  0.000000	  0.856216	  6.856216
+  2.222222	 16.563045	  0.000000	  0.856216	  6.856216
+  3.333333	 11.867940	  0.000000	  0.856216	  6.856216
+  4.444444	  8.503717	 -0.000000	  0.856216	  6.856216
+  5.555556	  6.093186	  0.000000	  0.856216	  6.856216
+  6.666667	  4.365950	  0.000000	  0.856216	  6.856216
+  7.777778	  3.128322	  0.000000	  0.856216	  6.856216
+  8.888889	  2.241536	 -0.000000	  0.856216	  6.856216
+ 10.000000	  1.606129	  0.000000	  0.856216	  6.856216
+
+~/dev/playing/roadrunner$ 
+
+
+--------------
+clang -I/Users/heiland/dev/roadrunner-osx-10.9-cp36m/include/rr/C -L/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib -lroadrunner test1.c -o test1
+clang -I/Users/heiland/dev/roadrunner-osx-10.9-cp36m/include -L/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib -lroadrunner test1.c -o test1
+clang -I/Users/heiland/dev/roadrunner-osx-10.9-cp36m/include -L/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib -lroadrunner test0.c -o test0
+clang -I/Users/heiland/dev/roadrunner-osx-10.9-cp36m/include/rr/C -L/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib -lroadrunner test0.c -o test0
+
+
+----------------
+~/dev/playing/libSBML$ cp roadrunner_test* ../roadrunner/
+
+~/dev/roadrunner-osx-10.9-cp36m$ ls
+AUTHORS.txt		RRP_AUTHORS.txt		VERSION.txt		models/
+FUNDING.txt		RRP_CHANGELOG.txt	bin/			plugins/
+INSTALL.txt		RRP_FUNDING.txt		build/			rrplugins-setup.py
+LICENSE.txt		RRP_LICENSE.txt		c_api_python/		rrplugins.egg-info/
+MANIFEST.in		RRP_NEWS.txt		dist/			setup.py
+NEWS.txt		RRP_NOTICE.txt		include/		share/
+NOTICE.txt		RRP_README.txt		lib/			site-packages/
+README.md		RRP_VERSION.txt		libroadrunner.egg-info/	testing/
+
