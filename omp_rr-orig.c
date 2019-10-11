@@ -26,12 +26,18 @@ clang -I/Users/heiland/dev/roadrunner-osx-10.9-cp36m/include/rr/C -L/Users/heila
 
 #include <omp.h>
 
-int main (int argc, char *argv[]) 
-{
-  if(argc < 4) {
-    printf("Provide args: <name of sbml file> <num cells> <num threads>\n");
-    exit(1);
-  }
+int main (int argc, char *argv[]) {
+   /* RRHandle rrHandle;
+    RRCDataPtr result;
+   int index;
+   int col;
+   int row;
+   */
+
+   if(argc < 4) {
+      printf("Provide args: <name of sbml file> <num cells> <num threads>\n");
+      exit(1);
+   }
   int ncells = atoi(argv[2]);
   printf("------  # of cells = %d\n\n", ncells);
   int nthreads = atoi(argv[3]);
@@ -39,23 +45,21 @@ int main (int argc, char *argv[])
 
   omp_set_num_threads(nthreads);
 
+  RRHandle rrHandle;
+  RRHandle rrHandleArray[42];
+  RRVectorPtr vptr;
+  RRCDataPtr result;  // start time, end time, and number of points
+  int idx_oxygen;
 
 //   #pragma omp parallel for
-  #pragma omp parallel 
+  #pragma omp parallel for private(rrHandle, vptr, result, idx_oxygen)
+  for (int icell=1; icell <= ncells; icell++)
   {
-     RRHandle rrHandle;
-//     RRHandle rrHandleArray[42];
-     RRVectorPtr vptr;
-     RRCDataPtr result;  // start time, end time, and number of points
-     static int idx_oxygen = 3;
-     
-//  #pragma omp parallel for private(rrHandle, vptr, result, idx_oxygen)
-  #pragma omp parallel for 
-  for (int icell=0; icell<ncells; icell++)
-  {
+   idx_oxygen = 3;
    printf ("------------  cell %d  ---------------\n", icell);
 
-   // printf ("Starting Test Program %s\n", argv[0]);
+   printf ("Starting Test Program %s\n", argv[0]);
+   // RRHandle rrHandle = createRRInstance();
    rrHandle = createRRInstance();
    if (!loadSBML (rrHandle, "feedback.xml")) {
       printf ("Error while loading SBML file\n");
@@ -63,6 +67,18 @@ int main (int argc, char *argv[])
       getchar ();
       exit (0);
    }
+   // printf("API = %s\n", getAPIVersion ());
+   // printf("getNumberOfIndependentSpecies= %d\n", getNumberOfIndependentSpecies(rrHandle));
+   // printf("getNumInstantiatedIntegrators= %d\n", getNumInstantiatedIntegrators(rrHandle));
+
+   // RRVector* v= getFloatingSpeciesInitialConcentrations(rrHandle);
+   // struct RRVector vec;
+   // setFloatingSpeciesConcentrations(rrHandle, &vec);
+   // RRStringArrayPtr = getFloatingSpeciesInitialConditionIds(rrHandle);
+   // double myvec[9];
+   // char* ids;
+   // ids = getFloatingSpeciesInitialConditionIds(rrHandle);
+   // printf("getFloatingSpeciesInitialConditionIds = %s\n",ids);
 
    int r = getNumberOfReactions(rrHandle);
    int m = getNumberOfFloatingSpecies(rrHandle);
@@ -77,7 +93,14 @@ int main (int argc, char *argv[])
 
    printf ("Floating species names:\n");
    printf ("-----------------------\n");
+   // cout<<stringArrayToString(getFloatingSpeciesIds())<<endl<<endl;
    printf("%s\n\n",stringArrayToString(getFloatingSpeciesIds(rrHandle)));
+
+   // What is this? How does it differ from the one above??
+   // printf ("Initial Floating species names:\n");
+   // printf ("-------------------------------\n");
+   // // cout<<stringArrayToString(getFloatingSpeciesInitialConditionIds())<<endl;
+   // printf("%s\n\n",stringArrayToString(getFloatingSpeciesInitialConditionIds(rrHandle)));
 
 /*   rrc_api.h:C_DECL_SPEC RRVectorPtr rrcCallConv getFloatingSpeciesConcentrations(RRHandle handle); 
 rrc_api.h:C_DECL_SPEC bool rrcCallConv setFloatingSpeciesInitialConcentrations (RRHandle handle, const RRVectorPtr vec);
@@ -109,32 +132,32 @@ typedef struct RRVector
       printf("%d %f\n",idx, vptr->Data[idx]);
 
    result = simulateEx (rrHandle, 0, 10, 10);  // start time, end time, and number of points
-   int index = 0;
-   // Print out column headers... typically time and species.
-   for (int col = 0; col < result->CSize; col++)
-   {
-      printf ("%10s", result->ColumnHeaders[index++]);
-      if (col < result->CSize - 1)
-      {
-         printf ("\t");
-      }
-   }
-   printf ("\n");
+   // int index = 0;
+   // // Print out column headers... typically time and species.
+   // for (int col = 0; col < result->CSize; col++)
+   // {
+   //    printf ("%10s", result->ColumnHeaders[index++]);
+   //    if (col < result->CSize - 1)
+   //    {
+   //       printf ("\t");
+   //    }
+   // }
+   // printf ("\n");
 
-   index = 0;
-   // Print out the data
-   for (int row = 0; row < result->RSize; row++)
-   {
-      for (int col = 0; col < result->CSize; col++)
-      {
-         printf ("%10f", result->Data[index++]);
-         if (col < result->CSize -1)
-         {
-            printf ("\t");
-         }
-      }
-   printf ("\n");
-   }
+   // index = 0;
+   // // Print out the data
+   // for (int row = 0; row < result->RSize; row++)
+   // {
+   //    for (int col = 0; col < result->CSize; col++)
+   //    {
+   //       printf ("%10f", result->Data[index++]);
+   //       if (col < result->CSize -1)
+   //       {
+   //          printf ("\t");
+   //       }
+   //    }
+   // printf ("\n");
+   // }
 
    //Cleanup
    freeRRCData (result);
@@ -142,7 +165,7 @@ typedef struct RRVector
    // getchar ();
 
   }  // end for
-  }  // end pragma
+//  }  // end pragma
 
    exit (0);
 }
