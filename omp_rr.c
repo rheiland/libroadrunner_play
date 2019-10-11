@@ -1,4 +1,11 @@
 /*
+
+Ubuntu:
+-------
+gcc -I/home/heiland/dev/libRR_1.3/include/rr/C  omp_rr.c -L/home/heiland/dev/libRR_1.3/lib -lroadrunner_c_api -o omp_rr
+
+OSX:
+-----
 clang -Xpreprocessor -fopenmp -m64  -I/Users/heiland/dev/roadrunner-osx-10.9-cp36m/include/rr/C -L/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib -lroadrunner_c_api  -L/usr/local/opt/libomp/lib -lomp  omp_rr.c -o omp_rr
 export DYLD_LIBRARY_PATH=/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib
 http://sys-bio.github.io/roadrunner/c_api_docs/html/group__helper_routines.html
