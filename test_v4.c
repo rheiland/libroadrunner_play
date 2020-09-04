@@ -11,6 +11,7 @@ export DYLD_LIBRARY_PATH=/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib:/usr/l
 http://sys-bio.github.io/roadrunner/c_api_docs/html/group__helper_routines.html
 http://sys-bio.github.io/roadrunner/c_api_docs/html/rrc__api_8h.html
 http://sys-bio.github.io/roadrunner/c_api_docs/html/group__initial_conditions.html
+http://sys-bio.github.io/roadrunner/c_api_docs/html/group__simopts.html#details
 
 -----------
 Figure out compile errors sometime:
