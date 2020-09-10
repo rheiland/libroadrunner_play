@@ -1,6 +1,6 @@
 /*
 
-Demonstrate simple use of libRoadrunner
+Demonstrate simple use of libRoadrunner, e.g. clang or g++-10 on Unix:
 
 clang -I/Users/heiland/dev/roadrunner-osx-10.9-cp36m/include/rr/C -L/Users/heiland/dev/roadrunner-osx-10.9-cp36m/lib -lroadrunner_c_api test_v4.c -o test_v4
 
@@ -14,8 +14,16 @@ http://sys-bio.github.io/roadrunner/c_api_docs/html/group__initial_conditions.ht
 http://sys-bio.github.io/roadrunner/c_api_docs/html/group__simopts.html#details
 
 -----------
-Figure out compile errors sometime:
-g++-10 -I/Users/heiland/libroadrunner/roadrunner-osx-10.9-cp36m/include/rr/C -L/Users/heiland/libroadrunner/roadrunner-osx-10.9-cp36m/lib -lroadrunner_c_api test_v4.c -o test_v4
+MinGW: in a Git Bash shell
+
+$ gcc -I/c/Users/heiland/dev/roadrunner-win64-vs14-cp35m/include/rr/C  test_v4.c -L/c/Users/heiland/dev/roadrunner-win64-vs14-cp35m/lib -lroadrunner_c_api -o testv4
+
+heiland@randy-asus-i7-8G MINGW64 ~/git/libroadrunner_play (master)
+$ ./testv4
+Starting Test Program C:\Users\heiland\git\libroadrunner_play\testv4.exe
+getCurrentIntegratorName= cvode
+...
+
 
 */
 #undef __cplusplus
